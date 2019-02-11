@@ -9,6 +9,8 @@
   "author": "Michael Adam Berry <MichaelAdamBerry3@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.4"
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "node-fetch": "^2.3.0"
   }
 }

@@ -8,10 +8,23 @@ const API_KEY = process.env.API_KEY;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("PORT 5000");
+});
+
+app.listen(port, err => {
+  if (err) {
+    console.warn(err);
+  }
+  console.log("Listening on port " + port);
+});
+
+//ROUTES
+
+//returns volume for specific volume id
 app.get("/volume-data/id/:id", (req, res) => {
   id = req.params.id;
   const apiURL = `https://www.googleapis.com/books/v1/volumes/${id}?key=${API_KEY}`;
-  //https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC?key=yourAPIKey
   fetch(apiURL)
     .then(res => res.json())
     .then(data => {
@@ -23,9 +36,10 @@ app.get("/volume-data/id/:id", (req, res) => {
     });
 });
 
+//returns list of volume objects by query
 app.get("/list-data/:query", (req, res) => {
   const query = req.params.query;
-  console.log(query);
+  console.log("list query called with", query);
   const apiURL =
     "https://www.googleapis.com/books/v1/volumes?q=" +
     query +
@@ -33,22 +47,9 @@ app.get("/list-data/:query", (req, res) => {
   fetch(apiURL)
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       res.send({ data });
     })
     .catch(err => {
       res.redirect("/");
     });
-});
-
-app.get("/", (req, res) => {
-  res.send("PORT 5000");
-});
-
-// console.log that your server is up and running
-app.listen(port, err => {
-  if (err) {
-    console.log(err);
-  }
-  console.log("Listening on port " + port);
 });

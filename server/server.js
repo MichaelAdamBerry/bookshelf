@@ -8,22 +8,6 @@ const API_KEY = process.env.API_KEY;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-let query;
-
-// sets the value of query variable from the POST method in Home Search <form>
-//redirects to /list where where react router will mount List component
-
-app.post("/query-list", (req, res) => {
-  query = req.body.query;
-  console.log(query);
-
-  if (!query) {
-    res.redirect("/error");
-  } else {
-    res.redirect("/list");
-  }
-});
-
 app.get("/volume-data/id/:id", (req, res) => {
   id = req.params.id;
   const apiURL = `https://www.googleapis.com/books/v1/volumes/${id}?key=${API_KEY}`;
@@ -39,8 +23,8 @@ app.get("/volume-data/id/:id", (req, res) => {
     });
 });
 
-// called at componentDidMount of List component
-app.get("/query-list-data", (req, res) => {
+app.get("/list-data/:query", (req, res) => {
+  const query = req.params.query;
   console.log(query);
   const apiURL =
     "https://www.googleapis.com/books/v1/volumes?q=" +

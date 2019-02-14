@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Spring, config, animated as a } from "react-spring/renderprops";
 import CoverImg from "../CoverImg";
 import PropTypes from "prop-types";

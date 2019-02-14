@@ -33,3 +33,16 @@ To run tests :
 from root directory cd into the client directory and run "npm run test" 
 
 This application is deployed through Heroku at https://nameless-temple-40466.herokuapp.com/
+
+
+## open issues: 
+
+Testing: 
+
+Recent updates to several dependecies for react hooks have broken some of the tests. I have chosen to keep some of those in while I identify the issue and update the tests. 
+
+## next steps: 
+
+Authenticated routes to manage and display a users personal bookshelf. 
+
+

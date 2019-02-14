@@ -1,4 +1,5 @@
 import React from "react";
+import { getVolumeList } from "../../utils/api/google";
 import Card from "../card/Card";
 import PropTypes from "prop-types";
 import CardSpring from "./ListCardView";
@@ -48,19 +49,19 @@ class List extends React.Component {
   async componentDidMount() {
     const query = queryString.parse(this.props.location.search);
     const { history } = this.props;
-    const URLForQuery = "/list-data/" + query.q;
-    const res = await fetch(URLForQuery);
-    const results = await res.json();
-    if (!results.data.items) {
-      this.setState({ noResults: true });
+    const volumes = await getVolumeList(query.q);
+    //handle no results from google
+    if (volumes === false) {
+      console.warn("the query string did not return any results from google");
       history.replace({ pathname: "/", state: { error: true } });
     } else {
-      this.setState({ volumes: results.data.items });
-      setTimeout(() => {
-        this.setState({ loading: false });
-      }, 1000);
+      this.setState({ volumes: volumes, query: query.q });
     }
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 1000);
   }
+
   render() {
     const { volumes, noResults, loading } = this.state;
     return (

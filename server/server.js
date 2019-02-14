@@ -8,7 +8,8 @@ const API_KEY = process.env.API_KEY;
 
 //for static files
 //app.use(express.json());
-app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.static("client/build"));
+app.use("*", express.static("client/build")); // Added this
 
 //ROUTES
 //returns volume for specific volume id

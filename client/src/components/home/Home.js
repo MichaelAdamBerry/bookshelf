@@ -39,7 +39,6 @@ const HomeView = ({ fromError }) => {
 
 export default class Home extends React.Component {
   render() {
-    //if true fromError prop indicates a redirect from bad request
     const fromError = this.props.history.action === "REPLACE" ? true : false;
 
     return <HomeView fromError={fromError} />;

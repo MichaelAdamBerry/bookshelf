@@ -5,7 +5,7 @@ import { Spring } from "react-spring/renderprops";
 import Card from "../card/Card";
 import VolumeCardView from "./VolumeCardView";
 import PropTypes from "prop-types";
-import Spinner from "../Spinner";
+import Loading from "../Loading";
 
 const RenderVolume = ({ volume }) => {
   return (
@@ -29,17 +29,21 @@ RenderVolume.propTypes = {
   volume: PropTypes.object.isRequired
 };
 
-//TODO componentDidMount should call
 export default class Volume extends React.Component {
   state = { loading: true };
+  timer = setTimeout(() => {
+    this.setState({ loading: false });
+  }, 1000);
 
   async componentDidMount() {
     const urlStr = queryString.parse(this.props.location.search);
     const volume = await getVolume(urlStr.id);
     this.setState({ volume: volume });
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 1000);
+    return this.timer;
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
   }
   render() {
     const { loading, volume } = this.state;
@@ -49,7 +53,7 @@ export default class Volume extends React.Component {
           <RenderVolume volume={volume} />
         ) : (
           <div className="volumeContainer" style={{ display: "flex" }}>
-            <Spinner style={{ alignItems: "center" }} />
+            <Loading style={{ alignItems: "center" }} />
           </div>
         )}
       </div>

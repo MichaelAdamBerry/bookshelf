@@ -3,7 +3,7 @@ import { getVolumeList } from "../../utils/api/google";
 import Card from "../card/Card";
 import PropTypes from "prop-types";
 import CardSpring from "./ListCardView";
-import Spinner from "../Spinner";
+import Loading from "../Loading";
 import queryString from "query-string";
 
 const ListItem = ({ volume }) => {
@@ -32,7 +32,7 @@ export const ListView = ({ volumes, loading }) => {
         <div
           className="listContainer"
           style={{ display: "flex", alignItems: "center", minHeight: "100vh" }}>
-          <Spinner />
+          <Loading />
         </div>
       )}
     </div>
@@ -46,6 +46,9 @@ ListView.propTypes = {
 
 class List extends React.Component {
   state = { loading: true };
+  timer = setTimeout(() => {
+    this.setState({ loading: false });
+  }, 1000);
   async componentDidMount() {
     const query = queryString.parse(this.props.location.search);
     const { history } = this.props;
@@ -57,9 +60,11 @@ class List extends React.Component {
     } else {
       this.setState({ volumes: volumes, query: query.q });
     }
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 1000);
+    return this.timer;
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
   }
 
   render() {

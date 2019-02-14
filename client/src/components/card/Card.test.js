@@ -9,6 +9,9 @@ const volume = {
     title: "a good title",
     authors: ["a good writer", "and another", "one more"],
     averageRating: 4
+  },
+  accessInfo: {
+    viewability: "ALL_PAGES"
   }
 };
 

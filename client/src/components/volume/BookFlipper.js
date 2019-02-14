@@ -1,26 +1,11 @@
 import React from "react";
-
 import { Spring, config, animated as a } from "react-spring/renderprops";
 import CoverImg from "../CoverImg";
-import PropTypes from "prop-types";
 import stripHtml from "string-strip-html";
 import Button from "../Button";
 
-const Front = ({ imageLinks }) => {
-  return <CoverImg imageLinks={imageLinks} maxRes={true} width={"350px"} />;
-};
-
-const Back = () => {
-  return <div className="back" />;
-};
-
 export default class BookFlipper extends React.Component {
   state = { flipped: false };
-
-  static propTypes = {
-    description: PropTypes.string,
-    previewLink: PropTypes.string
-  };
 
   handleClick = () => {
     this.setState(prevState => ({ flipped: !prevState.flipped }));
@@ -89,4 +74,16 @@ export default class BookFlipper extends React.Component {
       </div>
     );
   }
+}
+
+function Front({ imageLinks }) {
+  return (
+    <>
+      <CoverImg imageLinks={imageLinks} maxRes={true} />
+    </>
+  );
+}
+
+function Back() {
+  return <div className="back" />;
 }

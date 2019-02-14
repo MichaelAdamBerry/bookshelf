@@ -8,8 +8,15 @@ const API_KEY = process.env.API_KEY;
 
 //for static files
 //app.use(express.json());
-app.use(express.static("client/build"));
-app.use("*", express.static("client/build")); // Added this
+app.use(express.static(path.join(__dirname, "client/build")));
+
+//for production mode
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join((__dirname = "client/build/index.html")));
+  });
+}
 
 //ROUTES
 //returns volume for specific volume id
@@ -42,14 +49,6 @@ app.get("/list-data/:query", (req, res) => {
       res.redirect("/");
     });
 });
-
-//for production mode
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/build")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join((__dirname = "client/build/index.html")));
-  });
-}
 
 //for build mode
 

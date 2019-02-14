@@ -16,7 +16,7 @@ export default class CoverImg extends React.Component {
     if (!imageLinks) {
       return {
         key:
-          "http://www.lse.ac.uk/International-History/Images/Books/NoBookCover.png",
+          "https://www.lse.ac.uk/International-History/Images/Books/NoBookCover.png",
         width: width,
         height: height
       };
@@ -29,11 +29,14 @@ export default class CoverImg extends React.Component {
 
   render() {
     const src = this.getSrc();
+    const splitSrc = src.key.split(":");
+
+    const imgSrc = splitSrc[0] === "https" ? src.key : "https:" + splitSrc[1];
 
     return (
       <div style={{ height: "inherit", overflow: "hidden" }}>
         <img
-          src={src.key}
+          src={imgSrc}
           alt="book cover"
           style={{ height: "auto", width: `${src.width}` }}
         />
